@@ -3,38 +3,32 @@ body {
     color: white;
     font-family: 'Times New Roman', serif;
     text-align: center;
-}
-
-.spooky-container {
+  }
+  
+  .spooky-container {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.question {
+  }
+  
+  .question {
     font-style: italic;
     text-shadow: 0 0 5px black;
-}
-
-#answer-input {
+  }
+  
+  input[type="text"] {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
     border-bottom: 2px solid red;
     padding: 10px;
-}
-
-button {
+  }
+  
+  button {
     background-color: red;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-}
-
-#result {
-    margin-top: 20px;
-    font-weight: bold;
-    color: red;
-}
+  }
