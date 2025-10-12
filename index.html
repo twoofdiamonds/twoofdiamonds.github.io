@@ -1,19 +1,408 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Depraved Soul</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Reasons I Like You, Vaidehi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400&display=swap');
+
+        :root {
+            --bg-color: #fff0f5; /* Lavender Blush */
+            --text-color: #4b0082; /* Indigo */
+            --card-bg: #ffffff;
+            --heart-color: #ff69b4; /* Hot Pink */
+            --accent-color: #e6e6fa; /* Lavender */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Animated Background --- */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.5);
+            animation: floatUp 25s linear infinite;
+            bottom: -150px;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: -10px;
+        }
+
+        .heart:nth-child(1) { left: 10%; animation-duration: 13s; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 20%; animation-duration: 15s; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 30%; animation-duration: 18s; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 40%; animation-duration: 20s; animation-delay: 1s; }
+        .heart:nth-child(5) { left: 50%; animation-duration: 12s; animation-delay: 5s; }
+        .heart:nth-child(6) { left: 60%; animation-duration: 16s; animation-delay: 3s; }
+        .heart:nth-child(7) { left: 70%; animation-duration: 19s; animation-delay: 0s; }
+        .heart:nth-child(8) { left: 80%; animation-duration: 22s; animation-delay: 2s; }
+        .heart:nth-child(9) { left: 90%; animation-duration: 14s; animation-delay: 4s; }
+        .heart:nth-child(10) { left: 5%; animation-duration: 25s; animation-delay: 6s; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(405deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Content Styling --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--heart-color);
+            margin-bottom: 10px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 650px;
+            margin: 0 auto 40px auto;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .reason-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            opacity: 0;
+            transform: translateY(50px) rotateX(-20deg);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .reason-card.is-visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
+        }
+
+        .reason-card .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--heart-color);
+            margin-right: 15px;
+            float: left;
+            line-height: 1;
+        }
+
+        .reason-card .text {
+            overflow: hidden;
+            display: block;
+        }
+
+        .reason-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Special card for #69 */
+        .reason-card[data-number="69"] .number {
+            color: #ff4500; /* OrangeRed for a bit of spice ;) */
+        }
+        
+        .reason-card[data-number="69"] {
+            border-left-color: #ff4500;
+        }
+        
+        /* Last card style */
+        .final-message {
+            margin-top: 50px;
+            padding: 30px;
+            background: var(--accent-color);
+            border-radius: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            animation: fadeIn 2s 1s backwards;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            .reason-card .number {
+                font-size: 2rem;
+            }
+        }
+
+    </style>
 </head>
 <body>
-  <div class="spooky-container">
-    <h1>Dare to Answer?</h1>
-    <p>The question echoes in the night...</p>
-    <p class="question">What is your answer to what was asked? Answer, but the answer must be yours and YOURS only</p>
-    <form action="https://formspree.io/xeoqkpkz" method="POST">
-      <input type="text" name="answer" placeholder="Your darkest truth...">
-      <button type="submit">Submit Your Soul</button>
-    </form>
-  </div>
-  <script src="script.js"></script>
+
+    <div class="background-container">
+        <ul class="hearts">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>For Vaidehi Bodhankar</h1>
+            <p>Okay so what I was saying is that recently I've been wanting you physically a lot and there's been a lot more compliments related to your looks and how sexy you are, and our relationship has also revolved around sexual attraction. I find that completely okay but I just also want to take a moment to remind you of the other reasons I like you because I feel like I'm not doing that enough. So to rectify I made a list of all the reasons I like you...</p>
+        </header>
+
+        <main class="reasons-grid" id="reasonsGrid">
+            </main>
+        
+        <div class="final-message">
+            I really really like you Vaidehi Bodhankar, and I know I'll like you a lot more tomorrow :) ❤
+        </div>
+    </div>
+
+    <script>
+        const reasons = [
+            "I love that you stand on business and that you stand on your ideals and that you're a strong minded person",
+            "I love the way you argue with me while keeping it fun and respectful, every conversation like that is so fun with you.",
+            "I like the way you love you friends and family so visibly, the way you want to show them your affection always (gifts and all)",
+            "I love how competitive you are, by which I mean that you have that drive to be better, to do great in life in you.",
+            "I love how independent you are, and how much you refuse to take money from others because you are a strong independent woman",
+            "I love how vulnerable you allow yourself to be, in the sense you're open about your toughest battles",
+            "I love how strong you are fighting through some crazzzzzyyyy shit in your life",
+            "I love how optimistic you are, like you know you always try to cheer yourself and others up, it's really cute.",
+            "I love how protective you are of me and of your friends, pushing all the bad guys away from mouli",
+            "I love how you're the opposite of me in everything but yet were also so similiar in some ways.",
+            "I love how much you like songs, and that you associate things with songs like me and that we can share a music taste even if it's not all the songs",
+            "I love your taste in films, like atleast bollywood our taste is very similiar I would say, I love how much u like om shanti om",
+            "I love the way you incorporate marathi into your language, and hold onto your roots.",
+            "I love the way you make it so easy for me to speak in Hindi with you, which I only really do 100% with my family/when in India, you just make me feel like I'm home",
+            "I love the way you make time fly by like it's a couple seconds, hours feels like minutes with you",
+            "I love how comfortable you make me feel to the point that I know I'm safe whenever I'm with you",
+            "I love the way your eyes shine whenever we talk about something you're interested in",
+            "I love how locked in you get whenever you really want to do something, like i just know that you're gonna achieve everything you want because you're that type of girl.",
+            "I love the way you make me want to never say goodbye and just stay in the moment forever, it's always so painful and bittersweet saying goodbye to you",
+            "I love the way you get so worried about me everytime I'm only slightly sad, and then you keep asking me to cheer up",
+            "I love the way talking to you just fills me with so much joy and energy and just motivation to do things in life",
+            "I love the way you make me feel like I'm loved and valued and wanted in a way that no one has ever made me feel before",
+            "I love the way you understand me so perfectly when we're not even similiar people, like I get Jaishita and samarth getting me but you understand my soul while being so different",
+            "I love the way you're no longer hesitant about showing me off to your friends",
+            "I love the way you send me pictures and constantly update me about your day making me feel like I'm there with you even when I'm not",
+            "I love the way you understand how much I love to be pranked and suprised and then you actually do it",
+            "I love the way you appreciate my efforts and my affection for you and you reciprocate",
+            "I love the way you initiated conversations when we first started talking and the way you still do",
+            "I love the way you love and like people (self explanatory)",
+            "Last one for now because I need to send this to you, but know I was planning on doing 100, but anyways I love the way that I managed to somehow slip into your life and make you mine, and even tho you're not my girlfriend yet, i love the way you make me feel secure in the fact that you're not going anywhere.",
+            "I really love how often you smile, it makes smile along with you as well and I'm grateful for that",
+            "You already know what your laugh does to me, it completely just breaks my mind",
+            "I love when you call me buddhu, it's like your unofficial nickname for me but everytime you call me that it makes me so happy idk why",
+            "I love how flustered you get whenever I do anything that's related to strength like it makes me feel so proud of my strength and so happy",
+            "I love the way you take pictures and put artistic thought into your stories and everything, like some of your stories look soooo good",
+            "I love the way you're willing to learn and are curious about new things, like you know you're excited about everything.",
+            "I love that youre so humble about how smart and incredible you are, I find that really cool that you're so smart and you just refuse to have an ego cause of it",
+            "I love that you become the eldest sister and the stronger person whenever anyone is feeling shit, I also find that really attractive.",
+            "I love the way you yap, like the way you include so much detail in your yap so subtly, it makes you a so much more interesting person",
+            "I love the way you get so flustered by just how much I like you, because just like me I don't think anyone has loved you this much before",
+            "I love the way you latch onto me whenever you get scared by a pigeon, it's really really cute",
+            "I love the way you get fake mad at me, I always find it so funny and cute.",
+            "I love the way you're so proud of me and my accomplishments, like how are you so proud of me",
+            "I love the way you get vulnerable specifically with me, it makes me so proud that I can make you comfortable",
+            "I love the way you go back and read messages and the way you go back and look at pictures again and again, i just find that so cute",
+            "I love the way you're a rohit sharma fan, and that you're actually interested in cricket meaning i can yap to you about it",
+            "I love the way i wake up and the first person I want to text is you and say goodmorning!!!",
+            "Every time I wake up to a notification from you or just in general when there is a notification from you I get so insanely happy",
+            "I love that you make the effort to call me everyday that we don't meet I really do appreciate it a lot yk?",
+            "Number 50!!! Halfway there, I really love the way you try to make references because you know I love references",
+            "I love the fact that I've never felt insecure whenever you've called me bro because I know ur not friendzoning me 😭",
+            "I love how you make me want to lock in and do better because ur so locked in as well 😭",
+            "I love how you get butterflies so often, and that i actually you know make you crazy, it makes me feel really secure in the relationship",
+            "I love whenever you use the word chomeshwari and nautanki, specifically those two words",
+            "I love how much you love dogs and cats and how much respect the fact that I like ducks",
+            "I love that you were willing to overcome your dear of birds to go visit the ducks with me, i appreciate that a lot",
+            "I love that when we eat together you want to feed me and want me to feed you instead of just keeping it seperate. Maybe it's just basic coupley relationshipy stuff but I still appreciate it a lot yk?",
+            "I love the way you call me hero literally because it said hero on my DC jersey, like our nicknames came up for the stupidest reasons 😭😭",
+            "I really really love your taste in clothing and accessories, like it's so curated and everything fits you so well",
+            "this is slightly weird but I like the fact that I share somewhat similar traumas to you, like having weird fat phases amongst other things, you like completely get me yk",
+            "I love how much you love your lectures it's SO FUNNY the way you like him so much cause of zombie invasion bullshit",
+            "I love the way you hate matar, its so cute and funny to me, it's like how chota bacchas don't eat matar and u have to do the plane thing to feed them",
+            "I love the way that after I started the daily rain checks, u also started doing them most of the time for me, i appreciate that a lot",
+            "I love the way that ever since I've met you in person I've stopped dying in my dreams???",
+            "I love the way you always want me next to you whenever you miss, which happens a lot so it makes me feel so wanted",
+            "I love the way you get suprised, and give proper full reactions, like you really respect the suprise and i appreciate that a lot",
+            "I love the way you always want to hear what's on my mind and that you always ask me to just say it and never make me feel bad for yapping.",
+            "God i miss our daily messages, but I also really love the way you poured your heart out to me, not a lot of ppl do that on normal occasions other than like birthdays",
+            "Nice! I'll let this one be sexual related because you know it's 69, but I really love the way you have made me feel so comfortable with everything new we're doing and trying, like i know you'll stop if I don't want to go on, and you make me feel like I'm doing an okay job with everything and that just makes me want you so much more.",
+            "Last one for now, I'll probably send this to you Tommorow though, the day before we meet on Saturday!! I really love the way youre as excited to see me and meet me as I am to see you, like it's a big deal for the both of us and really appreciate that. See you tmmrw!!!",
+            "I love the way your brain works when it needs to solve a problem, i love the way u like think everything out loud and then ur just so open with everything idk how to explain it",
+            "I love that we can just sit in silence, on call or off call and its not akward at all",
+            "I love to get to know your perspective on things that i have totally different perspectives on, im just also really curious about how u feel about everything in the world",
+            "I LOVED IT SO MUCH WHEN U stood in solidarity with me, like i was so geniunly moved that i messaged all my friends",
+            "I love that even though theres so many barriers in the future waiting for us i can still imagine us working out past everything",
+            "I love your voice and your singing so much, i am so happy that i was blessed",
+            "I love the way you make plans and are so spontaneous about life, like jo bhi hona hai ho jayega. you make me feel way more free",
+            "I love the way you were so silly with Surya chasing him around and being just a joyous and amazing person",
+            "I love the sound of your voice when you just wake up, you might not like it but i find it so beautiful",
+            "I love whenever our fingers interlock, and your thumbs are just rubbing each other hands, it feels so perfect",
+            "I just love the way you smell, like idk if its ur shampoo or ur perfume but i just love it",
+            "I love the way we work like a team sometimes, idk it just makes me feel better about how things are gonna work out",
+            "I love the way you make my daily shit like washing dishes and cleaning so much better by just being there on call with me",
+            "I love that you make me feel at home :)",
+            "I love the way you wrinkle your nose upwards whenever u get extra happy, its really cute",
+            "I love that i have you now whenever i need to tell anyone anything, i know i can just yap to you first about anything",
+            "I love that when we are talking about stuff, sometimes youll get distracted by something completely random and go on tangents, its so cute",
+            "I love how u actually give such banger advice, like wthelly?",
+            "I love that i feel comfortable enough to share my insecurities with you, no matter how big or small they are. I mean i haven't shared a whole lot of them but if i ever do feel insecure about anything from now on i know i can come straight to you",
+            "I love that you consider the impact your decisions will have on the ppl around you",
+            "I love the way you made time for me yesterday, moving ur scheduled class around so you could be with me",
+            "I love the way i can read your face and see exactly whats going on in that silly little head of yours, i feel like i know you so well even though its not even been 3 months",
+            "I love how you remember like EVERYTHING, how do you even do that buddhu",
+            "I love how you know me so well with trying or without trying, like that marvel periodic table i will cherish forever, everything u do for me feels so perfect that im beyond shocked. how did i ever find a girl like you",
+            "I love how excited you got at ur own cooking being good, and how happy u got when i was proud of you. you are actually such a great cook",
+            "I love that even though catan was a game u never heard before, u played and tried it for a whole hour because u know i like it a lot",
+            "i love that i am so completely and utterly infatuated with you. and i know that its not just infatuation and theres something much deeper bubbling inside",
+            "I love that even though everything might be going fast with you, it only ever feels that way when we stop and think about how much time its been, without that every second spent with you both feels so long yet also so short. you've definitely ruined my perspective of time",
+            "I love that i wasn't scared of using the word love for most of these 99 things, im not saying the big 3 words yet don't worry, i want to wait and make them special but still its just nice that i can use all my heart for you",
+            "I love that 100 things are NOT enough to fit everything i like about you, if i wanted to i know i could keep going on and on and the list will only grow longer and longer and longer every single time that i talk to you, meet you, hangout, whatever."
+        ];
+
+        const reasonsGrid = document.getElementById('reasonsGrid');
+
+        // Populate the grid with reason cards
+        reasons.forEach((reason, index) => {
+            const card = document.createElement('div');
+            card.className = 'reason-card';
+            card.setAttribute('data-number', index + 1); // For styling specific cards
+            
+            const numberSpan = document.createElement('span');
+            numberSpan.className = 'number';
+            numberSpan.textContent = `${index + 1}.`;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'text';
+            textSpan.textContent = reason;
+
+            card.appendChild(numberSpan);
+            card.appendChild(textSpan);
+            reasonsGrid.appendChild(card);
+        });
+
+        // Animation on scroll
+        const cards = document.querySelectorAll('.reason-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Dynamically create heart elements for the background animation
+        const heartsContainer = document.querySelector('.hearts');
+        for (let i = 0; i < 10; i++) {
+            const heart = document.createElement('li');
+            heart.classList.add('heart');
+            heartsContainer.appendChild(heart);
+        }
+        
+    </script>
 </body>
 </html>
